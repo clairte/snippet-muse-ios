@@ -18,20 +18,30 @@ struct ContentView: View {
     @State var minutes = 0
     @State var timeString = "00:00"
     @State var timerRecord: Timer?
+    @State var recordedAudioFiles: [String] = []
     var body: some View {
         ZStack{
             //start recording
             VStack{
                 Spacer()
                 
+                List(recordedAudioFiles, id: \.self) {file in
+                    Text(file)
+                }
+                .frame(height:200)
+                
                 ZStack{
                     Circle()
-                        .fill(Color.red)
+                        .fill(Color.jetBlack)
                         .frame(width: 70, height:70)
                     
                     Image(systemName: "mic.fill")
                         .foregroundColor(Color.white)
                         .font(.system(size: 24))
+                    
+                    Text("Record a snippet")
+                        .offset(y: 60)
+                        .font(.system(size: 20, weight: .black))
                 }
                 .offset(y: -70)
                 .opacity(opacityRecord)
@@ -47,7 +57,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Circle()
-                        .fill(Color.red)
+                        .fill(Color.jetBlack)
                         .frame(width: circleSize, height: circleSize)
                         .offset(y: -70)
                 }
@@ -66,7 +76,7 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        //stop button with circles 
+                        //stop button with circles
                         ZStack{
                             Circle()
                                 .fill(Color.white)
@@ -83,7 +93,7 @@ struct ContentView: View {
                                 .frame(width: 70, height: 70)
                             
                             Image(systemName: "stop.fill")
-                                .foregroundColor(Color.red)
+                                .foregroundColor(Color.jetBlack)
                                 .font(.system(size: 24))
                         }
                         .offset(y: -50)
@@ -166,6 +176,7 @@ struct ContentView: View {
                 }
             }
         }
+        recordedAudioFiles.append("Recording_\(minutes)_\(seconds).mp3")
     }
 }
 
